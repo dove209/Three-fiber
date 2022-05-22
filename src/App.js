@@ -1,78 +1,91 @@
 import * as THREE from 'three';
-import React, { useRef, Suspense, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, ContactShadows, Instances, Instance } from '@react-three/drei'
-import { EffectComposer, SSAO } from '@react-three/postprocessing'
+import React, { Suspense, useState, useEffect } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useTexture, MeshReflectorMaterial, OrbitControls, Text } from '@react-three/drei'
 
-const particles = new Array(150).fill().map(() => ({
-  factor: THREE.MathUtils.randInt(20, 100),
-  speed: THREE.MathUtils.randFloat(0.01, 1),
-  xFactor: THREE.MathUtils.randFloatSpread(80),
-  yFactor: THREE.MathUtils.randFloatSpread(40),
-  zFactor: THREE.MathUtils.randFloatSpread(40)
-}))
 
-const Bubble = ({ factor, speed, xFactor, yFactor, zFactor }) => {
-  const ref = useRef();
-  useFrame((state) => {
-    const t = factor + state.clock.elapsedTime * (speed / 2);
-    ref.current.scale.setScalar(Math.max(1.5, Math.cos(t) * 5));
-    ref.current.position.set(
-      Math.cos(t) + Math.sin(t * 1) / 10 + xFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 1) * factor) / 10,
-      Math.sin(t) + Math.cos(t * 2) / 10 + yFactor + Math.sin((t / 10) * factor) + (Math.cos(t * 2) * factor) / 10,
-      Math.sin(t) + Math.cos(t * 2) / 10 + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10
-    )
-  })
+const VideoText = ({ ready, ...props }) => {
+  const [video] = useState(() => Object.assign(document.createElement('video'), 
+    { src: '/video/drei.mp4', crossOrgin: 'Annoymous', loop: true, muted: 'muted' }
+    ))
+  useEffect(() => {
+    ready && video.play()
+
+  },[video, ready])
   return (
-    <Instance ref={ref} />
+    <Text font='/fonts/Inter-Bold.woff' fontSize={3} letterSpacing={-0.06} {...props}>
+      LOVE
+      <meshBasicMaterial toneMapped={false}>
+        <videoTexture attach={'map'} args={[video]} encoding={THREE.sRGBEncoding} />
+      </meshBasicMaterial>
+    </Text>
   )
 }
 
-
-const Bubbles = () => {
-  const ref = useRef();
-  useFrame((state, delta) => {
-    ref.current.rotation.y = THREE.MathUtils.damp(ref.current.rotation.y, (-state.mouse.x * Math.PI) / 6, 2.8, delta);
-    ref.current.rotation.x = THREE.MathUtils.damp(ref.current.rotation.x, (-state.mouse.y * Math.PI) / 6, 2.8, delta);
-
-  })
-  return(
-    <Instances limit={particles.length} ref={ref} castShadow receiveShadow position={[0, 10, 0]}>
-      <sphereBufferGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial roughness={0} color="#f0f0f0" />
-      {particles.map((data, i) => (
-        <Bubble key={i} {...data} />
-      ))}
-    </Instances>
+const Ground = () => {
+  const [floor, normal] = useTexture([
+    '/image/SurfaceImperfections003_1K_var1.jpg',
+    '/image/SurfaceImperfections003_1K_Normal.jpg',
+  ])
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
+      <planeBufferGeometry args={[10, 10]} />
+      <MeshReflectorMaterial
+            blur={[400, 100]}
+            resolution={512}
+            mixBlur={6}
+            mixStrength={1.5}
+            color="#555"
+            mirror={0.5}
+            metalness={0.4}
+            roughnessMap={floor}
+            normalMap={normal}
+            normalScale={[2,2]}
+          />
+    </mesh>
   )
 }
 
 function App() {
+  const [ready, setReady] = useState(false);
+
   return (
-    <Canvas
-      shadows
-      gl={{ antialias: false }}
-      dpr={[1, 2]}
-      camera={{ position:[0,0,60],fov: 75, near: 10, far:150 }}
+    <Canvas 
+      gl={{ alpha: false }}
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 3, 100], fov: 15 }}
     >
-      <color attach={'background'} args={['#f0f0f0']} />
-      <fog attach={'fog'} args={['#fff', 60, 110]} />
-      <ambientLight intensity={1.5} />
-      <pointLight position={[100, 10, -50]} intensity={20} castShadow />
-      <pointLight position={[-100, -100, -100]} intensity={10} color='red' />
+      <color attach={'background'} args={['black']} />
+      <fog attach={'fog'} args={['black', 15, 20]} />
+      <Suspense fallback={null}>
+        <ambientLight intensity={0.5} />
+        <spotLight position={[0, 10, 0]} intensity={0.3} />
+        <directionalLight position={[-20, 0, -10]} intensity={0.7} />
 
-      <Bubbles />
-
-      <ContactShadows position={[0, -30, 0]} opacity={0.6} scale={130} blur={1} far={40} />
-      <EffectComposer multisampling={0}>
-        <SSAO samples={31} radius={0.1} intensity={30} luminanceInfluence={0.1} color={'red'} />
-      </EffectComposer>
-      {/* Helper ETC */}
-      <axesHelper args={[10]} />
-      <OrbitControls makeDefault />
+        <group position={[0, -1, 0]}>
+          <VideoText ready={ready} position={[0, 1.3, -2]} />
+          <Ground />
+        </group>
+        {/* <OrbitControls makeDefault /> */}
+        <Into ready={ready} setReady={setReady} />
+      </Suspense>
     </Canvas>
   );
 }
 
-export default App;
 
+const Into = ({ready, setReady}) => {
+  const vec = new THREE.Vector3();
+  useEffect(() => {
+    setTimeout(() => setReady(true), 500)
+  }, [])
+  useFrame((state) => {
+    if(ready) {
+      state.camera.position.lerp(vec.set(state.mouse.x * 5, 3 + state.mouse.y * 2, 14), 0.05)
+      state.camera.lookAt(0,0,0)
+    }
+  })
+  return null
+}
+
+export default App;
