@@ -14,6 +14,7 @@
     "three": "^0.140.2",
     "threejs-meshline": "^2.0.12",
     "uuid-by-string": "^3.0.7",
+    "valtio": "^1.6.1",
     "web-vitals": "^2.1.0",
     "wouter": "^2.8.0-alpha.2"
   },
