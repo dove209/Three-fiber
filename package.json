@@ -12,6 +12,7 @@
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "three": "^0.140.2",
+    "three-stdlib": "^2.10.1",
     "threejs-meshline": "^2.0.12",
     "uuid-by-string": "^3.0.7",
     "valtio": "^1.6.1",
