@@ -70,6 +70,7 @@ function App() {
   );
 }
 
+// 마우스 따라 다니는 투명(유리) 볼
 const Mouse = () => {
   const ref = useRef();
   const {viewport: { width, height }} = useThree();
