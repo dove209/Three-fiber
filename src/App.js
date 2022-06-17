@@ -7,7 +7,7 @@ import { useRoute, useLocation } from 'wouter';
 
 const GOLD_ENRATIO = 1.6183398875
 // const pexel = (id) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260`
-const pexel = (id) => `${window.location.href}/image/choriruring/${id}`
+const pexel = (id) => `/Three-fiber/image/choriruring/${id}`
 
 const images = [
   // Front
