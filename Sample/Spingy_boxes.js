@@ -9,7 +9,6 @@ const colors = ['#A2CCB6','#FCEEB5','#EE786E','#e0feff','lightpink','lightblue']
 
 const random = (i) => {
   const r = Math.random()
-  console.log(i)
   return {
     position: [100 - Math.random() * 200, 100 - Math.random() * 200, i * 1.5],
     color: colors[Math.round(Math.random() * (colors.length - 1))],

@@ -1,7 +1,9 @@
+import React, { useRef } from 'react';
+import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Physics, usePlane, useSphere } from '@react-three/cannon';
 import { EffectComposer, SSAO, Bloom } from '@react-three/postprocessing';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, useHelper } from '@react-three/drei';
 
 const InstancedSpheres = ({ count = 200 }) => {
   const { viewport: { height } } = useThree();
@@ -20,14 +22,19 @@ const InstancedSpheres = ({ count = 200 }) => {
 
 
 const Borders = () => {
-  const { viewport: {width, height} } = useThree();
+  const { viewport: { width, height} } = useThree();
   return (
     <>
-      <Plane position={[0, -height / 2, 0]} rotation={[-Math.PI / 2, 0, 0]}  />   //바닥
-      <Plane position={[-width / 2 - 1, 0, 0]} rotation={[0, Math.PI / 2, 0]}  /> //왼쪽
-      <Plane position={[width / 2 + 1, 0, 0]} rotation={[0, -Math.PI / 2, 0]}  /> //오른쪽
-      <Plane position={[0, 0, -1]} rotation={[0, 0, 0]} /> // 뒷면
-      <Plane position={[0, 0, 12]} rotation={[0, -Math.PI, 0]} /> // 앞면
+      {/* 바닥 */}
+      <Plane position={[0, -height / 2, 0]} rotation={[-Math.PI / 2, 0, 0]}  />   
+      {/* 왼쪽 */}
+      <Plane position={[-width / 2 - 1, 0, 0]} rotation={[0, Math.PI / 2, 0]}  /> 
+      {/* 오른쪽 */}
+      <Plane position={[width / 2 + 1, 0, 0]} rotation={[0, -Math.PI / 2, 0]}  /> 
+      {/* 뒷면 */}
+      <Plane position={[0, 0, -1]} rotation={[0, 0, 0]} /> 
+      {/* 앞면 */}
+      <Plane position={[0, 0, 12]} rotation={[0, -Math.PI, 0]} /> 
     </>
   )
 }
@@ -46,14 +53,15 @@ const Plane = (props) => {
 }
 
 
-function App() {
+const Light = () => {
+  const directionalLightRef = useRef(null);
+  useHelper(directionalLightRef, THREE.DirectionalLightHelper)
   return (
-    <Canvas shadows gl={{ stencil: false, antialias: false }} camera={{ position: [0, 0, 20], fov: 50, near: 17, far: 40 }}>
-      <fog attach="fog" args={["red", 25, 35]} />
-      <color attach="background" args={["#feef8a"]} />
+    <>
       <ambientLight intensity={1.5} />
       <directionalLight position={[-10, -10, -5]} intensity={0.5} />
-      <directionalLight
+      <directionalLight 
+        ref={directionalLightRef}
         castShadow
         intensity={4}
         position={[50, 50, 25]}
@@ -63,6 +71,19 @@ function App() {
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
+    </>
+  )
+}
+
+
+
+function App() {
+  return (
+    <Canvas shadows gl={{ stencil: false, antialias: false }} camera={{ position: [0, 0, 20], fov: 50, near: 0.1, far: 400 }}>
+      <fog attach="fog" args={["red", 25, 35]} />
+      <color attach="background" args={["#feef8a"]} />
+      <Light />
+
       <Physics gravity={[0, -50, 0]} defaultContactMaterial={{ restitution: 0.5 }}>
         <group position={[0, 0, -10]}>
           <Borders />
@@ -70,21 +91,31 @@ function App() {
           <Mouse />
         </group>
       </Physics>
-      {/* <EffectComposer>
-        <SSAO radius={0.4} intensity={50} luminanceInfluence={0.4} color="red" />
-        <Bloom intensity={1.25} kernelSize={3} luminanceThreshold={0.5} luminanceSmoothing={0.0} />
-      </EffectComposer> */}
-      {/* <axesHelper /> */}
-      {/* <OrbitControls /> */}
+      
+      
+      <EffectComposer>
+        {/* <SSAO radius={0.4} intensity={50} luminanceInfluence={0.4} color="red" /> */}
+        {/* <Bloom intensity={1.25} kernelSize={3} luminanceThreshold={0.5} luminanceSmoothing={0.0} /> */}
+      </EffectComposer>
+      
+      
+      <axesHelper />
+      <OrbitControls />
     </Canvas>
   );
 }
 
 const Mouse = () => {
   const { viewport: {width, height} } = useThree();
-  const [, api] = useSphere(() => ({ args: [6] }));
+  const [ref, api] = useSphere(() => ({ args: [6] }));
   useFrame((state) => api.position.set(state.mouse.x * width / 2, state.mouse.y * height / 2, 7 ))
-  return null;
+  // return null;
+  return (
+    <mesh ref={ref}>
+      <sphereBufferGeometry args={[6, 8, 8]} />
+      <meshStandardMaterial wireframe />
+    </mesh>
+  )
 }
 
 
