@@ -9,7 +9,6 @@ import {
   Text
 } from "@react-three/drei";
 import gsap from "gsap";
-import "./style/doughnut.css";
 
 
 let gutter = { size: 1 };
