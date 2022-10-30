@@ -1,100 +1,182 @@
-import * as THREE from 'three'
-import { Suspense, useRef, useState } from "react";
+import * as THREE from "three";
+import React, { useState, useRef, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
-  OrbitControls,
   Environment,
-  MeshDistortMaterial,
-  ContactShadows,
+  useCursor,
+  OrbitControls,
+  useGLTF,
+  Text
 } from "@react-three/drei";
-import { useSpring } from "@react-spring/core";
-import { a } from "@react-spring/three";
-
-const AnimatedMaterial = a(MeshDistortMaterial);
-
-const Scene = () => {
-  const sphere = useRef();
-  const light = useRef();
-  const [mode, setMode] = useState(false);
-  const [down, setDown] = useState(false);
-  const [hovered, setHovered] = useState(false);
-
-  useFrame((state) => {
-    light.current.position.x = state.mouse.x * 20;
-    light.current.position.y = state.mouse.y * 20;
-    if(sphere.current) {
-      sphere.current.position.x = THREE.MathUtils.lerp(sphere.current.position.x, hovered ? state.mouse.x / 2 : 0, 0.2)
-      sphere.current.position.y = THREE.MathUtils.lerp(
-        sphere.current.position.y,
-        Math.sin(state.clock.elapsedTime / 1.5) / 6 + (hovered ? state.mouse.y / 2 : 0),
-        0.2
-      )
-    }
-  })
+import gsap from "gsap";
+import "./style/doughnut.css";
 
 
+let gutter = { size: 1 };
+let grid = { cols: 12, rows: 6 };
 
-  const [{ wobble, coat, color, ambient, env }] = useSpring(
-    {
-      wobble: down ? 1.2 : hovered ? 1.05 : 1,
-      coat: mode && !hovered ? 0.04 : 1,
-      ambient: mode && !hovered ? 1.5 : 0.5,
-      env: mode && !hovered ? 0.4 : 1,
-      color: hovered ? '#E8B059' : mode ? '#202020' : 'white',
-      config: (n) =>
-        n === "wobble" && hovered && { mass: 2, tension: 1000, friction: 10 },
-    },
-    [mode, hovered, down]
-  );
+const centerX = (grid.cols - 1 + (grid.cols - 1) * gutter.size) * 0.5;
+const centerZ = (grid.rows - 1 + (grid.rows - 1) * gutter.size) * 0.5;
 
+const distance = (x1, y1, x2, y2) => {
+  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+};
 
-  
+const map = (value, start1, stop1, start2, stop2) => {
+  return ((value - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
+};
+
+const Light = () => {
   return (
     <>
-      <a.ambientLight intensity={ambient} />
-      <a.pointLight
-        ref={light}
-        position-z={-15}
-        intensity={env}
-        color="#f8c069"
-      />
-      <Suspense>
-        <a.mesh
-          ref={sphere}
-          scale={wobble}
-          onPointerOver={() => setHovered(true)}
-          onPointerOut={() => setHovered(false)}
-          onPointerDown={() => setDown(true)}
-          onPointerUp={() => {
-            setDown(false);
-            setMode(!mode)
-          }}
-        >
-          <sphereBufferGeometry args={[1, 64, 64]} />
-          <AnimatedMaterial color={color} envMapIntensity={env} clearcoat={coat} clearcoatRoughness={0} metalness={0.1} />
-        </a.mesh>
-        <Environment preset="warehouse" />
-        <ContactShadows 
-          rotation={[Math.PI / 2, 0, 0]}
-          position={[0, -1.6, 0]}
-          opacity={mode ? 0.8 : 0.4}
-          width={8}  
-          height={8}
-          blur={1}
-          far={1.6}
-        />
-      </Suspense>
+      <ambientLight intensity={0.1} />
     </>
   );
 };
 
+const Floor = () => {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]}>
+      <planeBufferGeometry args={[100, 100]} />
+      {/* <meshPhongMaterial color={"#a2b9e7"} /> */}
+      <meshStandardMaterial color={"#222"} envMapIntensity={0.5} />
+    </mesh>
+  );
+};
+
+const Box = ({ ...props }) => {
+  const [active, setActive] = useState(false);
+  useCursor(active);
+
+  const ref = useRef(null);
+  const {
+    viewport: { width, height },
+  } = useThree();
+  const { nodes, materials } = useGLTF("/model/Doughnut.glb");
+
+  const maxPositioY = 10;
+  const minPositionY = 0;
+  const startDistance = 5;
+  const endDistance = 0;
+
+  useFrame((state) => {
+    const mouseX = (state.mouse.x * width) / 2 || 100;
+    const mouseZ = (-state.mouse.y * height) / 2 || 100;
+    const mouseDistance = distance(
+      mouseX,
+      mouseZ,
+      ref.current.position.x - centerX,
+      ref.current.position.z - centerZ
+    );
+
+    const y = map(
+      mouseDistance,
+      startDistance,
+      endDistance,
+      minPositionY,
+      maxPositioY
+    );
+    gsap.to(ref.current.position, 0.4, { y: y < 1 ? 1 : y });
+
+    const scaleFactor = ref.current.position.y / 2.5;
+    const scale = scaleFactor < 1 ? 1 : scaleFactor;
+
+    gsap.to(ref.current.scale, 0.4, {
+      ease: "back.out(1.7)",
+      x: scale,
+      y: scale,
+      z: scale,
+    });
+
+    gsap.to(ref.current.rotation, 2, {
+      ease: "back.out(1.7)",
+      x: map(ref.current.position.y, -1, 1, Math.PI / 4, 0),
+      y: map(ref.current.position.y, -1, 1, Math.PI / 2, 0),
+      z: map(ref.current.position.y, -1, 1, Math.PI / 3, 0),
+    });
+  });
+
+  return (
+    <group
+      ref={ref}
+      {...props}
+      onPointerOver={() => setActive(true)}
+      onPointerOut={() => setActive(false)}
+    >
+      <mesh
+        geometry={nodes.doughnut.geometry}
+        material={materials["Material.003"]}
+      />
+      <mesh
+        geometry={nodes.sugar.geometry}
+        material={materials["Material.002"]}
+      />
+      <mesh
+        geometry={nodes.paticle.geometry}
+        material={materials["Material.001"]}
+      />
+    </group>
+  );
+};
+
+const Boxes = () => {
+  let boxList = [];
+  for (let row = 0; row < grid.rows; row++) {
+    for (let col = 0; col < grid.cols; col++) {
+      const position = [col + col * gutter.size, 0, row + row * gutter.size];
+      boxList.push({
+        position,
+      });
+    }
+  }
+  return boxList.map((props, index) => <Box key={index} {...props} />);
+};
+
+const Texts = () => {
+  return (
+    <group rotation={[-Math.PI / 2, 0, 0]} position={[0, 9, 0]}>
+      <Text fontSize={2} font='/fonts/Oduda-Bold.otf' position={[0, 1, 0]} color={'red'}>
+          DUNKIN
+      </Text>
+      <Text fontSize={2} font='/fonts/Oduda-Bold.otf' position={[0, -1, 0]} color={'hotpink'}>
+          DONUTS
+      </Text>
+    </group>
+  )
+}
+
 function App() {
   return (
-    <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 4], fov: 75 }}>
-      <Scene />
-      <axesHelper args={[10]} />
-      <OrbitControls makedefault />
-    </Canvas>
+    <>
+      <Canvas
+        dpr={1.5}
+        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+        camera={{
+          position: [0, 45, 0],
+          fov: 15,
+        }}
+      >
+        <Light />
+        <color attach={"background"} args={["#edccbe"]} />
+
+        <Suspense fallback={null}>
+          {/* <Floor /> */}
+          <group position={[-centerX, 0, -centerZ]}>
+            <Boxes />
+          </group>
+        </Suspense>
+
+        {/* <axesHelper args={[10]} /> */}
+        {/* <gridHelper args={[10, 10]} /> */}
+
+        <Texts />
+
+        {/* <OrbitControls /> */}
+
+        <Environment preset="city" />
+
+      </Canvas>
+    </>
   );
 }
 
