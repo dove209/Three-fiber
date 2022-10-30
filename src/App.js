@@ -1,10 +1,8 @@
-import * as THREE from "three";
-import React, { useState, useRef, Suspense, useMemo } from "react";
+import React, { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   Environment,
   useCursor,
-  OrbitControls,
   useGLTF,
   Text
 } from "@react-three/drei";
@@ -33,15 +31,14 @@ const Light = () => {
   );
 };
 
-const Floor = () => {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]}>
-      <planeBufferGeometry args={[100, 100]} />
-      {/* <meshPhongMaterial color={"#a2b9e7"} /> */}
-      <meshStandardMaterial color={"#222"} envMapIntensity={0.5} />
-    </mesh>
-  );
-};
+// const Floor = () => {
+//   return (
+//     <mesh rotation={[-Math.PI / 2, 0, 0]}>
+//       <planeBufferGeometry args={[100, 100]} />
+//       <meshStandardMaterial color={"#222"} envMapIntensity={0.5} />
+//     </mesh>
+//   );
+// };
 
 const Box = ({ ...props }) => {
   const [active, setActive] = useState(false);
