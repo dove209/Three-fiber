@@ -45,6 +45,7 @@ const Light = () => {
 //   );
 // };
 
+
 const Doughnut = ({ models, ...props }) => {
   const meshes = Object.keys(models).map(key => models[key]);
   const [active, setActive] = useState(false);
@@ -116,6 +117,9 @@ const Doughnut = ({ models, ...props }) => {
 
 };
 
+useGLTF.preload("/model/doughnut.glb");
+useGLTF.preload("/model/choco_doughnut.glb");
+useGLTF.preload("/model/origin_doughnut.glb");
 const Doughnuts = () => {
   const doughnut = useGLTF("/model/doughnut.glb");
   const choco_douhnut = useGLTF('/model/choco_doughnut.glb');
