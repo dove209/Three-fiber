@@ -6,14 +6,20 @@ import {
   useCursor,
   useGLTF,
   Text,
-  // OrbitControls,
+  OrbitControls,
   Merged,
 } from "@react-three/drei";
 import gsap from "gsap";
 import { Stats } from './Stats';
 
-let gutter = { size: 1.2 };
-let grid = { cols: 10, rows: 5 };
+const { innerWidth: width, innerHeight: height } = window;
+let gutter = { 
+  size: width > 500 ? 1.2 : 0.8
+};
+let grid = { 
+  cols: Math.ceil(width / 200) + (width < 500 ? 1 : 0),
+  rows: Math.round(height / 200) + (width < 500 ? 1 : 0) 
+};
 // let grid = { cols: 1, rows: 1 };
 
 
@@ -222,10 +228,10 @@ const Doughnuts = () => {
 const Texts = () => {
   return (
     <group rotation={[-Math.PI / 2, 0, 0]} position={[0, 9, 0]}>
-      <Text fontSize={2} font='/fonts/Oduda-Bold.otf' position={[0, 1, 0]} color={'red'}>
+      <Text fontSize={width < 500 ? 1 : 2} font='/fonts/Oduda-Bold.otf' position={[0, width < 500 ? 0.5 : 1, 0]} color={'red'}>
           DUNKIN
       </Text>
-      <Text fontSize={2} font='/fonts/Oduda-Bold.otf' position={[0, -1, 0]} color={'hotpink'}>
+      <Text fontSize={width < 500 ? 1 : 2} font='/fonts/Oduda-Bold.otf' position={[0, width < 500 ? -0.5 : -1, 0]} color={'hotpink'}>
           DONUTS
       </Text>
     </group>
