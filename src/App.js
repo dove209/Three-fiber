@@ -6,14 +6,16 @@ import {
   useCursor,
   useGLTF,
   Text,
-  OrbitControls,
+  // OrbitControls,
   Merged,
 } from "@react-three/drei";
 import gsap from "gsap";
 import { Stats } from './Stats';
 
-let gutter = { size: 1 };
-let grid = { cols: 11, rows: 6 };
+let gutter = { size: 1.2 };
+let grid = { cols: 10, rows: 5 };
+// let grid = { cols: 1, rows: 1 };
+
 
 const centerX = (grid.cols - 1 + (grid.cols - 1) * gutter.size) * 0.5;
 const centerZ = (grid.rows - 1 + (grid.rows - 1) * gutter.size) * 0.5;
@@ -44,6 +46,7 @@ const Light = () => {
 // };
 
 const Doughnut = ({ models, ...props }) => {
+  const meshes = Object.keys(models).map(key => models[key]);
   const [active, setActive] = useState(false);
   useCursor(active);
 
@@ -93,6 +96,8 @@ const Doughnut = ({ models, ...props }) => {
       z: map(ref.current.position.y, -1, 1, Math.PI / 3, 0),
     });
   });
+  
+
 
   return (
     <group
@@ -101,22 +106,56 @@ const Doughnut = ({ models, ...props }) => {
       onPointerOver={() => setActive(true)}
       onPointerOut={() => setActive(false)}
     >
-      <models.Doughnut />
-      <models.Sugar />
-      <models.Paticle />
+      {meshes.map((Mesh, index) => {
+        return (
+          <Mesh key={index} />
+        )
+      })}
     </group>
   );
+
 };
 
 const Doughnuts = () => {
-  const doughnut = useGLTF("/model/Doughnut.glb");
+  const doughnut = useGLTF("/model/doughnut.glb");
+  const choco_douhnut = useGLTF('/model/choco_doughnut.glb');
+  const origin_doughnut = useGLTF("/model/origin_doughnut.glb");
 
-  const meshes = useMemo(() => ({
-    Doughnut: doughnut.nodes.doughnut,
-    Sugar: doughnut.nodes.sugar,
-    Paticle: doughnut.nodes.paticle
-  }),[doughnut])
+  let doughnut_meshes = {}
+  let choco_doughnut_meshes = {};
+  let origin_doughnut_meshes = {};
 
+
+  Object.keys(doughnut.nodes).forEach(key=> {
+    const { type } = doughnut.nodes[key];
+    if (type === 'Mesh') {
+      doughnut_meshes = {
+        ...doughnut_meshes,
+        [key]: doughnut.nodes[key]
+      }
+    }
+  })
+
+
+  Object.keys(choco_douhnut.nodes).forEach(key=> {
+    const { type } = choco_douhnut.nodes[key];
+    if (type === 'Mesh') {
+      choco_doughnut_meshes = {
+        ...choco_doughnut_meshes,
+        [key]: choco_douhnut.nodes[key]
+      }
+    }
+  })
+
+  Object.keys(origin_doughnut.nodes).forEach(key=> {
+    const { type } = origin_doughnut.nodes[key];
+    if (type === 'Mesh') {
+      origin_doughnut_meshes = {
+        ...origin_doughnut_meshes,
+        [key]: origin_doughnut.nodes[key]
+      }
+    }
+  })
 
   let propsArr = [];
   for (let row = 0; row < grid.rows; row++) {
@@ -127,16 +166,51 @@ const Doughnuts = () => {
       });
     }
   }
+
+
+  let originPosition = [];
+  let berryPosition = [];
+  let chocoPosition = [];
+  for(let i = 0; i < propsArr.length; i += 3){
+    originPosition.push(propsArr[i]);
+    berryPosition.push(propsArr[i + 1]);
+    chocoPosition.push(propsArr[i + 2]);
+  }
+
   return (
-    <Merged meshes={meshes}>
-      {(models) => (
-        <group position={[-centerX, 0, -centerZ]}>
-            {
-              propsArr.map((props, index) => <Doughnut key={index} {...props} models={models} />)
-            }
-        </group>
-      )}
-    </Merged>
+    <>
+      {/* 일반 도넛 */}
+      <Merged meshes={origin_doughnut_meshes}>
+        {(models) => (
+          <group position={[-centerX, 0, -centerZ]}>
+              {
+                originPosition.map((props, index) => <Doughnut key={index} {...props} models={models} />)
+              }
+          </group>
+        )}
+      </Merged>
+      {/* 딸기 도넛 */}
+      <Merged meshes={doughnut_meshes}>
+        {(models) => (
+          <group position={[-centerX, 0, -centerZ]}>
+              {
+                berryPosition.map((props, index) => <Doughnut key={index} {...props} models={models} />)
+              }
+          </group>
+        )}
+      </Merged>
+
+      {/* 초코 도넛 */}
+      <Merged meshes={choco_doughnut_meshes}>
+        {(models) => (
+          <group position={[-centerX, 0, -centerZ]}>
+              {
+                chocoPosition.map((props, index) => <Doughnut key={index} {...props} models={models} />)
+              }
+          </group>
+        )}
+      </Merged>
+  </>
   )
 };
 
