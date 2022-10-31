@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
@@ -172,12 +173,12 @@ function App() {
           <Doughnuts />
         </Suspense>
 
-        <axesHelper args={[20]} />
-        <gridHelper args={[100, 100]} />
+        {/* <axesHelper args={[20]} /> */}
+        {/* <gridHelper args={[100, 100]} /> */}
 
         <Texts />
 
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         <Stats />
 
         <Environment preset="city" />
