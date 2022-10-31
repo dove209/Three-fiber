@@ -9,6 +9,7 @@
     "@react-three/drei": "^9.11.0",
     "@react-three/fiber": "^8.0.17",
     "@react-three/postprocessing": "^2.3.2",
+    "stats.js": "0.17.0",
     "gh-pages": "^4.0.0",
     "gsap": "^3.11.3",
     "react": "^18.1.0",
