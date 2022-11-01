@@ -2,6 +2,7 @@
 import React, { useState, useRef, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
+  Loader,
   Environment,
   useCursor,
   useGLTF,
@@ -264,10 +265,9 @@ function App() {
 
         {/* <OrbitControls /> */}
         <Stats />
-
         <Environment preset="city" />
-
       </Canvas>
+      <Loader />
     </>
   );
 }
