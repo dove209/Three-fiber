@@ -18,8 +18,8 @@ let gutter = {
   size: width > 500 ? 1.2 : 0.8
 };
 let grid = { 
-  cols: Math.ceil(width / 200) + (width < 500 ? 1 : 0),
-  rows: Math.round(height / 200) + (width < 500 ? 1 : 0) 
+  cols: Math.min(Math.ceil(width / 200) + (width < 500 ? 1 : 0), 10),
+  rows: Math.min(Math.round(height / 200) + (width < 500 ? 1 : 0), 5)
 };
 // let grid = { cols: 1, rows: 1 };
 
@@ -105,8 +105,6 @@ const Doughnut = ({ models, ...props }) => {
     });
   });
   
-
-
   return (
     <group
       ref={ref}
