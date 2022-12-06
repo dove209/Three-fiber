@@ -44,7 +44,7 @@ const Light = () => {
 }
 
 
-function App() {
+function CameraPan() {
 
   return (
     <Canvas shadows camera={{ position: [20, 15, 50], fov: 42 }}>
@@ -62,9 +62,9 @@ function App() {
       </Suspense>
       
       <axesHelper args={[5]} />
-      <OrbitControls />
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 }
 
-export default App;
+export default CameraPan;

@@ -8,7 +8,7 @@ import {
   ContactShadows,
 } from "@react-three/drei";
 import { useSpring } from "@react-spring/core";
-import { a } from "@react-spring/three";
+import { a } from "@react-spring/three"; //animated
 
 const AnimatedMaterial = a(MeshDistortMaterial);
 
@@ -46,6 +46,9 @@ const Scene = () => {
     },
     [mode, hovered, down]
   );
+
+
+  
   return (
     <>
       <a.ambientLight intensity={ambient} />
@@ -90,7 +93,7 @@ function App() {
     <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 4], fov: 75 }}>
       <Scene />
       <axesHelper args={[10]} />
-      <OrbitControls makedefault />
+      {/* <OrbitControls makedefault /> */}
     </Canvas>
   );
 }

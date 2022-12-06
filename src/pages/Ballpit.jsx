@@ -55,7 +55,7 @@ const Plane = (props) => {
 
 const Light = () => {
   const directionalLightRef = useRef(null);
-  useHelper(directionalLightRef, THREE.DirectionalLightHelper)
+  // useHelper(directionalLightRef, THREE.DirectionalLightHelper)
   return (
     <>
       <ambientLight intensity={1.5} />
@@ -77,7 +77,7 @@ const Light = () => {
 
 
 
-function App() {
+function Ballpit() {
   return (
     <Canvas shadows gl={{ stencil: false, antialias: false }} camera={{ position: [0, 0, 20], fov: 50, near: 0.1, far: 400 }}>
       <fog attach="fog" args={["red", 25, 35]} />
@@ -99,8 +99,8 @@ function App() {
       </EffectComposer>
       
       
-      <axesHelper />
-      <OrbitControls />
+      {/* <axesHelper /> */}
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 }
@@ -109,17 +109,17 @@ const Mouse = () => {
   const { viewport: {width, height} } = useThree();
   const [ref, api] = useSphere(() => ({ args: [6] }));
   useFrame((state) => api.position.set(state.mouse.x * width / 2, state.mouse.y * height / 2, 7 ))
-  // return null;
-  return (
-    <mesh ref={ref}>
-      <sphereBufferGeometry args={[6, 8, 8]} />
-      <meshStandardMaterial wireframe />
-    </mesh>
-  )
+  return null;
+  // return (
+  //   <mesh ref={ref}>
+  //     <sphereBufferGeometry args={[6, 8, 8]} />
+  //     <meshStandardMaterial wireframe />
+  //   </mesh>
+  // )
 }
 
 
 
 
 
-export default App;
+export default Ballpit;
