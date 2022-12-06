@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { useRef } from 'react';
 import { Canvas,  useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Instances, Instance} from '@react-three/drei';
+import { Instances, Instance} from '@react-three/drei';
 
 
 // 파란색 버블
@@ -51,7 +51,7 @@ const Bubbles = () => {
   )
 }
 
-const Glass_Bubbles = () => {
+const GlassBubbles = () => {
   return (
     <Instances limit={glass_bubbles.length} position={[0, 0, -10]}>
       <sphereBufferGeometry args={[THREE.MathUtils.randFloat(0.5, 0.9), 32, 32]} />
@@ -84,7 +84,7 @@ function App() {
       />
       <directionalLight intensity={3} position={[100, 100, 100]} color='purple' />
       <Bubbles />
-      <Glass_Bubbles />
+      <GlassBubbles />
       <Mouse />
       {/* <axesHelper args={[10]}/> */}
       {/* <OrbitControls makedefault /> */}

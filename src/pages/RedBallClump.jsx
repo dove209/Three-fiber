@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as THREE from 'three';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
 import { Physics, useSphere } from '@react-three/cannon';

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useLayoutEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three';
 import * as meshline from 'meshline'

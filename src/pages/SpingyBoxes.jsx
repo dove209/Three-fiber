@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as THREE from 'three';
-import React, { useRef, useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useSprings, a } from '@react-spring/three'
 

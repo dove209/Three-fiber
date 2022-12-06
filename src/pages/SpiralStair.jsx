@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useCursor, softShadows, OrbitControls } from '@react-three/drei'

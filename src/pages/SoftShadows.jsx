@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { softShadows } from '@react-three/drei'

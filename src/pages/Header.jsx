@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
 
 const Container = styled.div`
   position: fixed;

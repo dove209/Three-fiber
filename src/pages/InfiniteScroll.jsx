@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import React, { useRef, Suspense, useEffect } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Preload, Image as ImageImpl, ScrollControls, Scroll, useScroll } from '@react-three/drei'
 import '../infinite_scroll.css';

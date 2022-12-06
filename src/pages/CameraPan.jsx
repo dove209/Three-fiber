@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import React, { useState, useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { softShadows, RoundedBox, Environment, useCursor, useHelper, OrbitControls } from '@react-three/drei'
+import { softShadows, RoundedBox, Environment, useCursor, useHelper } from '@react-three/drei'
 
 softShadows();
 
@@ -62,7 +62,6 @@ function CameraPan() {
       </Suspense>
       
       <axesHelper args={[5]} />
-      {/* <OrbitControls /> */}
     </Canvas>
   );
 }
