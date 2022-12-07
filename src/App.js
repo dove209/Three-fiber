@@ -16,7 +16,7 @@ const SoftShadows = lazy(() => import("./pages/SoftShadows"));
 const SpiralStair = lazy(() => import("./pages/SpiralStair"));
 const TossInternship = lazy(() => import("./pages/TossInternship"));
 const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
-const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
+// const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
 
 const App = () => {
   return (
@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/spiral-stair" element={<SpiralStair />} />
           <Route path="/toss-internship" element={<TossInternship />} />
           <Route path="/wobble-sphere" element={<WobbleSphere />} />
-          <Route path="/environment-blur-transition" element={<EnvironmentBlur />} />
+          {/* <Route path="/environment-blur-transition" element={<EnvironmentBlur />} /> */}
         </Routes>
       </Suspense>
     </BrowserRouter>
