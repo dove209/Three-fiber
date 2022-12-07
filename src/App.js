@@ -14,10 +14,10 @@ import ImageGallery from './pages/ImageGallery';
 import InfiniteScroll from './pages/InfiniteScroll';
 import RedBallClump from './pages/RedBallClump';
 import SoftShadows from './pages/SoftShadows';
-import SpingyBoxes from './pages/SpingyBoxes'
 import SpiralStair from './pages/SpiralStair';
 import TossInternship from './pages/TossInternship';
 import WobbleSphere from './pages/WobbleSphere';
+import EnvironmentBlur from "./pages/EnvironmentBlur";
 
 
 const App = () => {
@@ -36,10 +36,10 @@ const App = () => {
         <Route path="/infinite-scroll" element={<InfiniteScroll />} />
         <Route path="/red-ball-clump" element={<RedBallClump />} />
         <Route path="/soft-shadows" element={<SoftShadows />} />
-        <Route path="/spingy-boxes" element={<SpingyBoxes />} />
         <Route path="/spiral-stair" element={<SpiralStair />} />
         <Route path="/toss-internship" element={<TossInternship />} />
         <Route path="/wobble-sphere" element={<WobbleSphere />} />
+        <Route path='/environment-blur-transition' element={<EnvironmentBlur />} />
       </Routes>
     </BrowserRouter>
 

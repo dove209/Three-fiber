@@ -3,7 +3,6 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Physics, usePlane, useSphere } from '@react-three/cannon';
-import { EffectComposer, SSAO, Bloom } from '@react-three/postprocessing';
 import { OrbitControls, useHelper } from '@react-three/drei';
 
 const InstancedSpheres = ({ count = 200 }) => {
@@ -92,13 +91,7 @@ function Ballpit() {
           <Mouse />
         </group>
       </Physics>
-      
-      
-      <EffectComposer>
-        {/* <SSAO radius={0.4} intensity={50} luminanceInfluence={0.4} color="red" /> */}
-        {/* <Bloom intensity={1.25} kernelSize={3} luminanceThreshold={0.5} luminanceSmoothing={0.0} /> */}
-      </EffectComposer>
-      
+           
       
       {/* <axesHelper /> */}
       {/* <OrbitControls /> */}

@@ -106,9 +106,6 @@ const Header = () => {
               <Link to={"/soft-shadows"}>Soft Shadows</Link>
             </li>
             <li>
-              <Link to={"/spingy-boxes"}>Spingy Boxes</Link>
-            </li>
-            <li>
               <Link to={"/spiral-stair"}>Spiral Stair</Link>
             </li>
             <li>
@@ -116,6 +113,9 @@ const Header = () => {
             </li>
             <li>
               <Link to={"/wobble-sphere"}>Wobble Sphere</Link>
+            </li>
+            <li>
+              <Link to={"/environment-blur-transition"}>Environment Blur and Transitions</Link>
             </li>
           </ul>
         </div>
