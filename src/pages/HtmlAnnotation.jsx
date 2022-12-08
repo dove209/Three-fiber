@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei'
-
 
 const Dodecahedron = ({ ...props }) => {
   return (
@@ -27,7 +28,14 @@ const Dodecahedron = ({ ...props }) => {
 
 
 const Content = () => {
+  const { scene } = useThree();
   const ref = useRef();
+
+  useEffect(() => {
+    const AxisHelper = new THREE.AxesHelper(5);
+    scene.add(AxisHelper)
+  }, [])
+  
   useFrame(() => {
     ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z += 0.01 
   })
@@ -42,6 +50,8 @@ const Content = () => {
 
 
 function App() {
+
+
   return (
     <Canvas 
       dpr={[1,2]}
@@ -54,7 +64,6 @@ function App() {
       <Content /> 
     
       {/* Helper ETC */}
-      <axisHelper args={[10]} />
       <OrbitControls makeDefault />
     </Canvas>
   );
