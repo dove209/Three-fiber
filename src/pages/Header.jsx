@@ -117,10 +117,7 @@ const Header = () => {
             <li>
               <Link to={"/environment-blur-transition"}>Environment Blur and Transitions</Link>
             </li>
-            <li>
-              <Link to={"/infinite-tube"}>infinite Tube</Link>
-            </li>
-            <li>
+             <li>
               <Link to={"/3d-typing-effect"}>3D Typing Effect</Link>
             </li>
           </ul>
