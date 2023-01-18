@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-useless-concat */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import styled from "styled-components";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -51,7 +51,7 @@ const TypingEffect = () => {
     caretPosScene: [],
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const textInputEl = textInputRef.current;
     textInputEl.style.fontSize = `${textureFontSize}px`;
     textInputEl.style.font = `100 ${textureFontSize}px ${fontName}`;
