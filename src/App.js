@@ -17,6 +17,8 @@ const SpiralStair = lazy(() => import("./pages/SpiralStair"));
 const TossInternship = lazy(() => import("./pages/TossInternship"));
 const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
 const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
+const InfiniteTube = lazy(() => import('./pages/InfiniteTube'));
+const TypingEffect = lazy(() => import('./pages/TypingEffect'))
 
 const App = () => {
   return (
@@ -39,6 +41,9 @@ const App = () => {
           <Route path="/toss-internship" element={<TossInternship />} />
           <Route path="/wobble-sphere" element={<WobbleSphere />} />
           <Route path="/environment-blur-transition" element={<EnvironmentBlur />} />
+          <Route path="/infinite-tube" element={<InfiniteTube />} />
+          <Route path="/3d-typing-effect" element={<TypingEffect />} />
+
         </Routes>
       </Suspense>
     </BrowserRouter>
