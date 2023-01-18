@@ -36,7 +36,7 @@ const TypingEffect = () => {
     cursorMesh;
 
   // String to Show
-  let string = "Show caret<div>if focused</div>";
+  let string = "Hello,<div>World!</div>";
 
   // Coordinates data per 2D canvas and 3D scene
   let textureCoordinates = [];
@@ -413,6 +413,12 @@ const TypingEffect = () => {
       }
     }
   }, []);
+
+
+
+
+
+
   return (
     <>
       <div ref={containerRef} />
