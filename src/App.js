@@ -17,7 +17,9 @@ const SpiralStair = lazy(() => import("./pages/SpiralStair"));
 const TossInternship = lazy(() => import("./pages/TossInternship"));
 const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
 const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
-const TypingEffect = lazy(() => import('./pages/TypingEffect'))
+const TypingEffect = lazy(() => import('./pages/TypingEffect'));
+const Mosaic = lazy(() => import('./pages/Mosaic'));
+const MonalisaEffect = lazy(() => import('./pages/MonalisaEffect'));
 
 const App = () => {
   return (
@@ -41,7 +43,8 @@ const App = () => {
           <Route path="/wobble-sphere" element={<WobbleSphere />} />
           <Route path="/environment-blur-transition" element={<EnvironmentBlur />} />
           <Route path="/3d-typing-effect" element={<TypingEffect />} />
-
+          <Route path="/mosaic" element={<Mosaic />} />
+          <Route path="/monalisa-effect" element={<MonalisaEffect />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

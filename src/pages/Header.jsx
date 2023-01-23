@@ -120,6 +120,13 @@ const Header = () => {
              <li>
               <Link to={"/3d-typing-effect"}>3D Typing Effect</Link>
             </li>
+            <li>-------- GLSL Shader --------</li>
+            <li>
+              <Link to={"/mosaic"}>Mosaic</Link>
+            </li>
+            <li>
+              <Link to={"/monalisa-effect"}>Monalisa Effect</Link>
+            </li>
           </ul>
         </div>
       )}
