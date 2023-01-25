@@ -19,7 +19,9 @@ const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
 const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
 const TypingEffect = lazy(() => import('./pages/TypingEffect'));
 const Mosaic = lazy(() => import('./pages/Mosaic'));
-const MonalisaEffect = lazy(() => import('./pages/MonalisaEffect'));
+const NoiseEffect = lazy(() => import('./pages/NoiseEffect'));
+const WaveEffect = lazy(() => import('./pages/WaveEffect'));
+const FadeMaterial = lazy(() => import('./pages/FadeMaterial'));
 
 const App = () => {
   return (
@@ -44,7 +46,11 @@ const App = () => {
           <Route path="/environment-blur-transition" element={<EnvironmentBlur />} />
           <Route path="/3d-typing-effect" element={<TypingEffect />} />
           <Route path="/mosaic" element={<Mosaic />} />
-          <Route path="/monalisa-effect" element={<MonalisaEffect />} />
+          <Route path="/noise-effect" element={<NoiseEffect />} />
+          <Route path="/wave-effect" element={<WaveEffect />} />
+          <Route path="/fade-material" element={<FadeMaterial />} />
+        
+
         </Routes>
       </Suspense>
     </BrowserRouter>

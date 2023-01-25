@@ -125,7 +125,13 @@ const Header = () => {
               <Link to={"/mosaic"}>Mosaic</Link>
             </li>
             <li>
-              <Link to={"/monalisa-effect"}>Monalisa Effect</Link>
+              <Link to={"/noise-effect"}>Noise Effect</Link>
+            </li>
+            <li>
+              <Link to={"/wave-effect"}>Wave Effect</Link>
+            </li>
+            <li>
+              <Link to={"/fade-material"}>Fade Material</Link>
             </li>
           </ul>
         </div>
