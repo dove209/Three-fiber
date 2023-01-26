@@ -26,7 +26,7 @@ const Container = styled.div`
     height: 100vh;
     box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.2);
     ul {
-        height: calc(100% - 130px);
+        height: calc(100% - 150px);
         overflow: auto ;
         -ms-overflow-style: none; 
         scrollbar-width: none;
