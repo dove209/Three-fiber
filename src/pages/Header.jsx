@@ -22,7 +22,7 @@ const Container = styled.div`
   }
 
   .menu-list {
-    padding: 80px 40px;
+    padding: 50px 40px;
     height: 100vh;
     box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.2);
     ul {
