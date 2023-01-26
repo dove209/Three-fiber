@@ -18,10 +18,11 @@ const TossInternship = lazy(() => import("./pages/TossInternship"));
 const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
 const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
 const TypingEffect = lazy(() => import('./pages/TypingEffect'));
-const Mosaic = lazy(() => import('./pages/Mosaic'));
-const NoiseEffect = lazy(() => import('./pages/NoiseEffect'));
-const WaveEffect = lazy(() => import('./pages/WaveEffect'));
-const FadeMaterial = lazy(() => import('./pages/FadeMaterial'));
+const Mosaic = lazy(() => import('./pages/shaderEx/Mosaic'));
+const NoiseEffect = lazy(() => import('./pages/shaderEx/NoiseEffect'));
+const WaveEffect = lazy(() => import('./pages/shaderEx/WaveEffect'));
+const FadeMaterial = lazy(() => import('./pages/shaderEx/FadeMaterial'));
+const GooeyHoverEffect = lazy(() => import('./pages/shaderEx/GooeyHoverEffect'));
 
 const App = () => {
   return (
@@ -49,8 +50,7 @@ const App = () => {
           <Route path="/noise-effect" element={<NoiseEffect />} />
           <Route path="/wave-effect" element={<WaveEffect />} />
           <Route path="/fade-material" element={<FadeMaterial />} />
-        
-
+          <Route path="/gooey-image-hover-effect" element={<GooeyHoverEffect />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

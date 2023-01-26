@@ -133,6 +133,9 @@ const Header = () => {
             <li>
               <Link to={"/fade-material"}>Fade Material</Link>
             </li>
+            <li>
+              <Link to={"/gooey-image-hover-effect"}>Gooey Image Hover Effect</Link>
+            </li>
           </ul>
         </div>
       )}

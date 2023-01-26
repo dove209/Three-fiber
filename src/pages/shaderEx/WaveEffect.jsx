@@ -12,7 +12,7 @@ const WaveShaderMaterial = shaderMaterial(
     uTime: 0,
     uTexture: new THREE.Texture(),
   },
-  // Vertext Shader
+  // Vertex Shader
   glsl`
     precision mediump float;
     varying vec2 vUv;
