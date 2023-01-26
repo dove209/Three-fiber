@@ -18,7 +18,6 @@ const Conainter = styled.section `
     .title {
         width: 60vmin;
         flex: 0 0 auto;
-
     }
 
     .title_figure {
@@ -31,7 +30,6 @@ const Conainter = styled.section `
         object-fit: cover;
         object-position: center;
         opacity: 0;
-
     }
 `;
 
@@ -41,7 +39,7 @@ const Stage = styled.div`
     top: 0;
     width: 100%;
     height: 100vh;
-    z-index: 9;
+    z-index: 11;
 `
 
 
