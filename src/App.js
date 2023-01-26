@@ -50,7 +50,7 @@ const App = () => {
           <Route path="/noise-effect" element={<NoiseEffect />} />
           <Route path="/wave-effect" element={<WaveEffect />} />
           <Route path="/fade-material" element={<FadeMaterial />} />
-          <Route path="/gooey-image-hover-effect" element={<GooeyHoverEffect />} />
+          <Route path="/gooey-hover" element={<GooeyHoverEffect />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
