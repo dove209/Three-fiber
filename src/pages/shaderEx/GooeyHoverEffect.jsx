@@ -1,60 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useRef, useEffect } from 'react';
-import gsap from 'gsap';
-import * as THREE from 'three';
-import styled from 'styled-components';
-import { Canvas, useFrame, extend, useLoader, useThree } from '@react-three/fiber';
+import React, { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
+import * as THREE from "three";
+import {
+  Canvas,
+  useFrame,
+  extend,
+  useLoader,
+  useThree,
+} from "@react-three/fiber";
 import { shaderMaterial } from "@react-three/drei";
 import glsl from "babel-plugin-glsl/macro";
 
-const Conainter = styled.section `
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    z-index: 10;
-    user-select: none;
-    .title {
-        width: 60vmin;
-        flex: 0 0 auto;
-    }
-
-    .title_figure {
-        margin: 0;
-        padding: 0;
-    }
-    .title_image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        opacity: 0;
-    }
-`;
-
-const Stage = styled.div`
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 11;
-`
-
 
 const GooeyShaderMaterial = shaderMaterial(
-    // Uniform
-    {
-        uImage: new THREE.Texture(),
-        uImageHover: new THREE.Texture(),
-        uMouse: new THREE.Vector2(),
-        uTime: .0,
-        uResolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
-        uPR: window.devicePixelRatio.toFixed(1)
-    },
-    // Vertex Shader
-    glsl`
+  // Uniform
+  {
+    uImage: new THREE.Texture(),
+    uImageHover: new THREE.Texture(),
+    uMouse: new THREE.Vector2(),
+    uTime: 0.0,
+    uResolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+    uPR: window.devicePixelRatio.toFixed(1),
+  },
+  // Vertex Shader
+  glsl`
         varying vec2 vUv;
 
         void main() {
@@ -62,8 +32,8 @@ const GooeyShaderMaterial = shaderMaterial(
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
     `,
-    // Fragment Shader
-    glsl`
+  // Fragment Shader
+  glsl`
         precision mediump float;
         
         varying vec2 vUv;
@@ -112,84 +82,63 @@ const GooeyShaderMaterial = shaderMaterial(
     `
 );
 
-extend({ GooeyShaderMaterial })
+extend({ GooeyShaderMaterial });
 
 const Plane = () => {
-    const ref = useRef(null);
-    const shaderRef = useRef();
+  const ref = useRef(null);
+  const shaderRef = useRef();
 
-    const { mouse } = useThree();
-    const [$image] = useState(() => document.querySelector('.title_image'));
+  const { mouse } = useThree();
 
-    const [image, hoverImage] = useLoader(THREE.TextureLoader, [$image.src, $image.dataset.hover])
+  const [image, hoverImage] = useLoader(THREE.TextureLoader, [
+    '/image/infinity_scroll/img1.jpg',
+    '/image/infinity_scroll/img6.jpg',
+  ]);
 
-    const onMouseMove = () => {
-        gsap.to(ref.current.rotation, 1., {
-            x : - mouse.y * 0.3,
-            y: mouse.x * (Math.PI / 6)
-        })
+  const onMouseMove = () => {
+    gsap.to(ref.current.rotation, 1, {
+      x: -mouse.y * 0.3,
+      y: mouse.x * (Math.PI / 6),
+    });
 
-        // shaderRef.current.uMouse = mouse;
-        gsap.to(shaderRef.current.uMouse, 0.5, {
-            x: mouse.x,
-            y: mouse.y
-        })
-    }
+    // shaderRef.current.uMouse = mouse;
+    gsap.to(shaderRef.current.uMouse, 0.5, {
+      x: mouse.x,
+      y: mouse.y,
+    });
+  };
 
-    useFrame(({ clock }) => {
-        shaderRef.current.uTime = clock.getElapsedTime();
-    })
+  useFrame(({ clock }) => {
+    shaderRef.current.uTime = clock.getElapsedTime();
+  });
 
-    useEffect(() => {
-        document.body.addEventListener('mousemove', onMouseMove);
-        return () => {
-            document.body.removeEventListener('mousemove', onMouseMove)
-        }
-    },[])
+  useEffect(() => {
+    document.body.addEventListener("mousemove", onMouseMove);
+    return () => {
+      document.body.removeEventListener("mousemove", onMouseMove);
+    };
+  }, []);
 
-
-    return (
-        <mesh ref={ref}>
-            <planeBufferGeometry args={[1, 1.5, 1, 1]}  />
-            <gooeyShaderMaterial
-                ref={shaderRef}
-                uImage = {image}
-                uImageHover = {hoverImage}
-            />
-        </mesh>
-    )
-}
-
+  return (
+    <mesh ref={ref}>
+      <planeBufferGeometry args={[1, 1.5, 1, 1]} />
+      <gooeyShaderMaterial
+        ref={shaderRef}
+        uImage={image}
+        uImageHover={hoverImage}
+      />
+    </mesh>
+  );
+};
 
 const App = () => {
   return (
-    <>
-        <Conainter>
-            <article className='title'>
-                <figure className='title_figure'>
-                    <img 
-                        className='title_image'
-                        src="/image/infinity_scroll/img1.jpg"
-                        data-hover='/image/infinity_scroll/img6.jpg'
-                        alt=""
-                        />
-                </figure>
-            </article>
-        </Conainter>
+      <Canvas dpr={[1, 2]} camera={{ fov: 50, position: [0, 0, 2] }}>
+        <ambientLight color={"#fff"} intensity={2} />
 
-        <Stage>
-            <Canvas
-                dpr={[1,2]}
-                camera={{ fov: 50, position:[0, 0, 2] }}
-            >
-                <ambientLight color={'#fff'} intensity={2} />
-
-                <Plane />
-            </Canvas>
-        </Stage>
-
-    </>
-  )
-}
+        <Plane />
+      </Canvas>
+  );
+};
 
 export default App;
