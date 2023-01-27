@@ -64,7 +64,7 @@ const GooeyShaderMaterial = shaderMaterial(
             vec2 mouse = uMouse * -0.5;
 
             vec2 circlePos = st + mouse;
-            float c = circle(circlePos, .3, 2.) * 2.5;
+            float c = circle(circlePos, .05, 2.) * 2.5;
 
             float offx = uv.x + sin(uv.y + uTime * .1);
             float offy = uv.y - uTime * 0.1 - cos(uTime * .001) * .01;
