@@ -122,12 +122,6 @@ const Plane = () => {
     const [$image] = useState(() => document.querySelector('.title_image'));
 
     const [image, hoverImage] = useLoader(THREE.TextureLoader, [$image.src, $image.dataset.hover])
-    const sizes = new THREE.Vector2(0, 0);
-    const offset = new THREE.Vector2(0, 0);
-
-    const { width, height, top, left } = $image.getBoundingClientRect()
-    sizes.set(width, height)
-    offset.set(left - window.innerWidth / 2 + width / 2, -top + window.innerHeight / 2 - height / 2)
 
     const onMouseMove = () => {
         gsap.to(ref.current.rotation, 1., {
@@ -155,9 +149,8 @@ const Plane = () => {
 
 
     return (
-        <mesh ref={ref} position={[offset.x, offset.y, 0]} scale={[sizes.x, sizes.y, 1]}>
-            <planeBufferGeometry args={[1, 1, 1, 1]}  />
-            {/* <meshBasicMaterial map={image} /> */}
+        <mesh ref={ref}>
+            <planeBufferGeometry args={[1, 1.5, 1, 1]}  />
             <gooeyShaderMaterial
                 ref={shaderRef}
                 uImage = {image}
@@ -187,7 +180,7 @@ const App = () => {
         <Stage>
             <Canvas
                 dpr={[1,2]}
-                camera={{ position: [0, 0, 800], fov: (180 *  (2 * Math.atan(window.innerHeight / 2 / 800))) / Math.PI, near: 1, far: 10000 }}
+                camera={{ fov: 50, position:[0, 0, 2] }}
             >
                 <ambientLight color={'#fff'} intensity={2} />
 
