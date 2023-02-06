@@ -8,9 +8,9 @@ import glsl from "babel-plugin-glsl/macro";
 const WaveShaderMaterial = shaderMaterial(
   //Uniform
   {
-    uColor: new THREE.Color(0.0, 0.0, 0.0),
-    uTime: 0,
-    uTexture: new THREE.Texture(),
+    u_color: new THREE.Color(0.0, 0.0, 0.0),
+    u_time: 0,
+    u_texture: new THREE.Texture(),
   },
   // Vertex Shader
   glsl`
@@ -18,7 +18,7 @@ const WaveShaderMaterial = shaderMaterial(
     varying vec2 vUv;
     varying float vWave;
 
-    uniform float uTime;
+    uniform float u_time;
 
     #pragma glslify: snoise3 = require(glsl-noise/simplex/3d); 
 
@@ -26,29 +26,37 @@ const WaveShaderMaterial = shaderMaterial(
       vUv = uv;
       
       vec3 pos = position;
-      float noiseFreq = 1.5;
-      float noiseAmp = 0.25;
-      vec3 noisePos = vec3(pos.x * noiseFreq + uTime, pos.y, pos.z);
+      float noiseFreq = 1.5; // 주파수
+      float noiseAmp = 0.25; // 진폭
+      vec3 noisePos = vec3(pos.x * noiseFreq + u_time, pos.y, pos.z);
       pos.z += snoise3(noisePos) * noiseAmp;
       vWave = pos.z;
     
 
-      gl_Position = projectionMatrix * modelViewMatrix * vec4( pos , 1.0 );
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( pos, 1.0 );
     }
   `,
   //Fragment Shader
   glsl`
     precision mediump float;
-    uniform vec3 uColor;
-    uniform float uTime;
-    uniform sampler2D uTexture;
+    uniform vec3 u_color;
+    uniform float u_time;
+    uniform sampler2D u_texture;
 
     varying vec2 vUv;
     varying float vWave;
 
     void main() {
-      float wave = vWave * 0.2;
-      vec3 texture = texture2D(uTexture, vUv + wave).rgb;
+      float wave = vWave * 0.1;
+      // Split each texture color vector
+      float r = texture2D(u_texture, vUv).r;
+      float g = texture2D(u_texture, vUv).g;
+      float b = texture2D(u_texture, vUv + wave).b;
+
+      // Put them back together
+      vec3 texture = vec3(r,g,b);
+
+      //vec3 texture = texture2D(u_texture, vUv + wave).rgb;
       gl_FragColor = vec4(texture, 1.0);
     }
   `
@@ -63,7 +71,7 @@ const Wave = () => {
   
   
   useFrame(({ clock }) => {
-    ref.current.uTime = clock.getElapsedTime()
+    ref.current.u_time = clock.getElapsedTime()
   })
 
 
@@ -71,7 +79,7 @@ const Wave = () => {
   return (
     <mesh>
       <planeBufferGeometry args={[0.4, 0.6, 16, 16]} />
-      <waveShaderMaterial ref={ref} uColor={'hotpink'} uTexture={image} />
+      <waveShaderMaterial ref={ref} u_color={'hotpink'} u_texture={image} />
     </mesh>
   )
 }

@@ -17,12 +17,12 @@ import glsl from "babel-plugin-glsl/macro";
 const GooeyShaderMaterial = shaderMaterial(
   // Uniform
   {
-    uImage: new THREE.Texture(),
-    uImageHover: new THREE.Texture(),
-    uMouse: new THREE.Vector2(),
-    uTime: 0.0,
-    uResolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
-    uPR: window.devicePixelRatio.toFixed(1),
+    u_image: new THREE.Texture(),
+    u_imageHover: new THREE.Texture(),
+    u_mouse: new THREE.Vector2(),
+    u_time: 0.0,
+    u_resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+    u_pr: window.devicePixelRatio.toFixed(1),
   },
   // Vertex Shader
   glsl`
@@ -39,12 +39,12 @@ const GooeyShaderMaterial = shaderMaterial(
         
         varying vec2 vUv;
 
-        uniform vec2 uMouse;
-        uniform vec2 uResolution;
-        uniform float uPR;
-        uniform float uTime;
-        uniform sampler2D uImage;
-        uniform sampler2D uImageHover;
+        uniform vec2 u_mouse;
+        uniform vec2 u_resolution;
+        uniform float u_pr;
+        uniform float u_time;
+        uniform sampler2D u_image;
+        uniform sampler2D u_imageHover;
 
         #pragma glslify: snoise3 = require(glsl-noise/simplex/3d); 
     
@@ -56,25 +56,25 @@ const GooeyShaderMaterial = shaderMaterial(
 
         void main() {
             vec2 uv = vUv;
-            vec2 res = uResolution * uPR;
+            vec2 res = u_resolution * u_pr;
             vec2 st = gl_FragCoord.xy / res.xy - vec2(0.5);
         
-            st.y *= uResolution.y / uResolution.x;
+            st.y *= u_resolution.y / u_resolution.x;
 
-            vec2 mouse = uMouse * -0.5;
+            vec2 mouse = u_mouse * -0.5;
 
             vec2 circlePos = st + mouse;
             float c = circle(circlePos, .05, 2.) * 2.5;
 
-            float offx = uv.x + sin(uv.y + uTime * .1);
-            float offy = uv.y - uTime * 0.1 - cos(uTime * .001) * .01;
+            float offx = uv.x + sin(uv.y + u_time * .1);
+            float offy = uv.y - u_time * 0.1 - cos(u_time * .001) * .01;
 
-            float n = snoise3(vec3(offx, offy, uTime * .1) * 8.) - 1.;
+            float n = snoise3(vec3(offx, offy, u_time * .1) * 8.) - 1.;
 
             float finalMask = smoothstep(0.4, 0.5, n + pow(c, 2.));
 
-            vec4 image = texture2D(uImage, uv);
-            vec4 hover = texture2D(uImageHover, uv);
+            vec4 image = texture2D(u_image, uv);
+            vec4 hover = texture2D(u_imageHover, uv);
 
             vec4 finalImage = mix(image, hover, finalMask);
 
@@ -102,15 +102,15 @@ const Plane = () => {
       y: mouse.x * (Math.PI / 6),
     });
 
-    // shaderRef.current.uMouse = mouse;
-    gsap.to(shaderRef.current.uMouse, 0.5, {
+    // shaderRef.current.u_mouse = mouse;
+    gsap.to(shaderRef.current.u_mouse, 0.5, {
       x: mouse.x,
       y: mouse.y,
     });
   };
 
   useFrame(({ clock }) => {
-    shaderRef.current.uTime = clock.getElapsedTime();
+    shaderRef.current.u_time = clock.getElapsedTime();
   });
 
   useEffect(() => {
@@ -125,8 +125,8 @@ const Plane = () => {
       <planeBufferGeometry args={[1, 1.5, 1, 1]} />
       <gooeyShaderMaterial
         ref={shaderRef}
-        uImage={image}
-        uImageHover={hoverImage}
+        u_image={image}
+        u_imageHover={hoverImage}
       />
     </mesh>
   );
