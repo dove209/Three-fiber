@@ -8,8 +8,8 @@ const Container = styled.div`
   top: 0;
   right: 0;
   z-index: 99;
-  background-color: ${({ theme }) => theme === 'dark' ? '#000' : '#fff'};
-  color: ${({ theme }) => theme === 'dark' ? '#fff' : '#000'};
+  background-color: ${({ theme }) => (theme === "dark" ? "#000" : "#fff")};
+  color: ${({ theme }) => (theme === "dark" ? "#fff" : "#000")};
 
   .menu-button {
     position: absolute;
@@ -17,7 +17,7 @@ const Container = styled.div`
     right: 20px;
     cursor: pointer;
     svg {
-        fill: ${({ theme }) => theme === 'dark' ? '#fff' : '#000'}
+      fill: ${({ theme }) => (theme === "dark" ? "#fff" : "#000")};
     }
   }
 
@@ -26,13 +26,13 @@ const Container = styled.div`
     height: 100vh;
     box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.2);
     ul {
-        height: calc(100% - 150px);
-        overflow: auto ;
-        -ms-overflow-style: none; 
-        scrollbar-width: none;
-        &::-webkit-scrollbar {
-            display: none;
-        }
+      height: calc(100% - 150px);
+      overflow: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       li {
         padding: 10px 0px;
       }
@@ -43,29 +43,25 @@ const Container = styled.div`
 const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState("light");
 
   useLayoutEffect(() => {
-    if (location.pathname === '/Drei-videoTexture' 
-        || location.pathname === '/horizontal-tiles'
-        || location.pathname === '/image-gallery'
-        || location.pathname === '/toss-internship'
-
-        )
-    {
-        setTheme('dark')
+    if (
+      location.pathname === "/Drei-videoTexture" ||
+      location.pathname === "/horizontal-tiles" ||
+      location.pathname === "/image-gallery" ||
+      location.pathname === "/toss-internship"
+    ) {
+      setTheme("dark");
     } else {
-        setTheme('light')
+      setTheme("light");
     }
-  },[location])
+  }, [location]);
 
   return (
-    <Container theme={theme} >
+    <Container theme={theme}>
       <div className="menu-button" onClick={() => setIsOpen((state) => !state)}>
-        {isOpen
-            ? <AiOutlineClose size={30} /> 
-            : <AiOutlineMenu size={30} />
-        }
+        {isOpen ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} />}
       </div>
 
       {isOpen && (
@@ -89,7 +85,7 @@ const Header = () => {
             <li>
               <Link to={"/horizontal-tiles"}>Horizontal Tiles</Link>
             </li>
-            
+
             <li>
               <Link to={"/html-annotation"}>Html Annotation</Link>
             </li>
@@ -115,10 +111,15 @@ const Header = () => {
               <Link to={"/wobble-sphere"}>Wobble Sphere</Link>
             </li>
             <li>
-              <Link to={"/environment-blur-transition"}>Environment Blur and Transitions</Link>
+              <Link to={"/environment-blur-transition"}>
+                Environment Blur and Transitions
+              </Link>
             </li>
-             <li>
+            <li>
               <Link to={"/3d-typing-effect"}>3D Typing Effect</Link>
+            </li>
+            <li>
+              <Link to={"/surface-sampling"}>Surface Sampling</Link>
             </li>
             <li>-------- GLSL Shader --------</li>
             <li>

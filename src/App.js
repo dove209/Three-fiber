@@ -18,6 +18,9 @@ const TossInternship = lazy(() => import("./pages/TossInternship"));
 const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
 const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
 const TypingEffect = lazy(() => import('./pages/TypingEffect'));
+const SurfaceSampling = lazy(() => import('./pages/SurfaceSampling'));
+
+// GLSL Ex
 const Mosaic = lazy(() => import('./pages/shaderEx/Mosaic'));
 const NoiseEffect = lazy(() => import('./pages/shaderEx/NoiseEffect'));
 const WaveEffect = lazy(() => import('./pages/shaderEx/WaveEffect'));
@@ -46,6 +49,8 @@ const App = () => {
           <Route path="/wobble-sphere" element={<WobbleSphere />} />
           <Route path="/environment-blur-transition" element={<EnvironmentBlur />} />
           <Route path="/3d-typing-effect" element={<TypingEffect />} />
+          <Route path="/surface-sampling" element={<SurfaceSampling />} />
+          {/* GLSL Ex */}
           <Route path="/mosaic" element={<Mosaic />} />
           <Route path="/noise-effect" element={<NoiseEffect />} />
           <Route path="/wave-effect" element={<WaveEffect />} />
