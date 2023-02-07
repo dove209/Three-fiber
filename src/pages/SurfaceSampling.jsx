@@ -1,4 +1,4 @@
-import React, { useRef, Suspense } from "react";
+import React, { useRef } from "react";
 import * as THREE from "three";
 import { MeshSurfaceSampler } from "three/examples/jsm/math/MeshSurfaceSampler";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
