@@ -8,7 +8,7 @@ import {
   useLoader,
   useThree,
 } from "@react-three/fiber";
-import { OrbitControls, useTexture, Effects } from "@react-three/drei";
+import { OrbitControls, useTexture, Effects, Stars } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
@@ -184,6 +184,7 @@ const App = () => {
       {/* <color attach="background" args={['#f0f0f0']} /> */}
       <Elephant />
       <Post />
+      <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
       <OrbitControls />
     </Canvas>
   );
