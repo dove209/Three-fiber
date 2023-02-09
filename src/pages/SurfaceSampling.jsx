@@ -8,7 +8,7 @@ import {
   useLoader,
   useThree,
 } from "@react-three/fiber";
-import { OrbitControls, useTexture, Effects, Stars } from "@react-three/drei";
+import { OrbitControls, useTexture, Effects, Stars, Bounds } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
@@ -106,7 +106,7 @@ const Elephant = () => {
       let pointFound = false;
       while (!pointFound) {
         sampler.sample(tempPosition);
-        if (tempPosition.distanceTo(this.prevPoint) < 30) {
+        if (tempPosition.distanceTo(this.prevPoint) < 25) {
           this.vertices.push(tempPosition.x, tempPosition.y, tempPosition.z);
           this.prevPoint = tempPosition.clone();
           pointFound = true;
@@ -182,10 +182,12 @@ const App = () => {
       }}
     >
       {/* <color attach="background" args={['#f0f0f0']} /> */}
-      <Elephant />
+      <Bounds fit clip observe margin={1}>
+          <Elephant />
+      </Bounds>
       <Post />
       <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
-      <OrbitControls />
+      <OrbitControls makeDefault/>
     </Canvas>
   );
 };

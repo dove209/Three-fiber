@@ -50,7 +50,8 @@ const Header = () => {
       location.pathname === "/Drei-videoTexture" ||
       location.pathname === "/horizontal-tiles" ||
       location.pathname === "/image-gallery" ||
-      location.pathname === "/toss-internship"
+      location.pathname === "/toss-internship" ||
+      location.pathname === "/surface-sampling"
     ) {
       setTheme("dark");
     } else {
@@ -120,6 +121,9 @@ const Header = () => {
             </li>
             <li>
               <Link to={"/surface-sampling"}>Surface Sampling</Link>
+            </li>
+            <li>
+              <Link to={"/moksha"}>Moksha</Link>
             </li>
             <li>-------- GLSL Shader --------</li>
             <li>

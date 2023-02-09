@@ -34,17 +34,17 @@ const Ground = () => {
     <mesh rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
       <planeBufferGeometry args={[10, 10]} />
       <MeshReflectorMaterial
-            blur={[400, 100]}
-            resolution={512}
-            mixBlur={6}
-            mixStrength={1.5}
-            color="#555"
-            mirror={0.5}
-            metalness={0.4}
-            roughnessMap={floor}
-            normalMap={normal}
-            normalScale={[2,2]}
-          />
+          blur={[400, 100]}
+          resolution={512}
+          mixBlur={6}
+          mixStrength={1.5}
+          color="#555"
+          mirror={0.5}
+          metalness={0.4}
+          roughnessMap={floor}
+          normalMap={normal}
+          normalScale={[2,2]}
+        />
     </mesh>
   )
 }
