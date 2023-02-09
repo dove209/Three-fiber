@@ -178,7 +178,7 @@ const App = () => {
         fov: 75,
         near: 0.001,
         far: 10000,
-        position: [0, 100, 230],
+        position: [0, 100, 300],
       }}
     >
       {/* <color attach="background" args={['#f0f0f0']} /> */}
@@ -187,7 +187,7 @@ const App = () => {
       </Bounds>
       <Post />
       <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
-      <OrbitControls makeDefault/>
+      {/* <OrbitControls makeDefault/> */}
     </Canvas>
   );
 };
