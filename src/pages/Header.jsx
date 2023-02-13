@@ -44,7 +44,7 @@ const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState("light");
-  console.log('지니에서 수정22222')
+  console.log('메인에서 수정!!!!')
   useLayoutEffect(() => {
     if (
       location.pathname === "/Drei-videoTexture" ||
