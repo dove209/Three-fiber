@@ -19,6 +19,7 @@ const WobbleSphere = lazy(() => import("./pages/WobbleSphere"));
 const EnvironmentBlur = lazy(() => import("./pages/EnvironmentBlur"));
 const TypingEffect = lazy(() => import('./pages/TypingEffect'));
 const SurfaceSampling = lazy(() => import('./pages/SurfaceSampling'));
+const SpiritOfRhythm = lazy(() => import('./pages/SpiritOfRhythm'));
 
 // GLSL Ex
 const Mosaic = lazy(() => import('./pages/shaderEx/Mosaic'));
@@ -50,6 +51,9 @@ const App = () => {
           <Route path="/environment-blur-transition" element={<EnvironmentBlur />} />
           <Route path="/3d-typing-effect" element={<TypingEffect />} />
           <Route path="/surface-sampling" element={<SurfaceSampling />} />
+          <Route path="/spirit-of-rhythm" element={<SpiritOfRhythm />} />
+
+
           {/* GLSL Ex */}
           <Route path="/mosaic" element={<Mosaic />} />
           <Route path="/noise-effect" element={<NoiseEffect />} />

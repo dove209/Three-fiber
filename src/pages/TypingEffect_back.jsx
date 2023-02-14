@@ -124,7 +124,7 @@ const Particles = () => {
 
   return (
     // 가운데로 Position 이동
-    <Instances name={'test'} limit={10000} position={[-0.5 * stringBox.wScene, -0.5 * stringBox.hScene, 0]}>
+    <Instances limit={10000} position={[-0.5 * stringBox.wScene, -0.5 * stringBox.hScene, 0]}>
       <torusGeometry args={[0.1, 0.05, 16, 50 ]} />
       <meshNormalMaterial/>
       {textureCoordinates.map((data, idx) => (
