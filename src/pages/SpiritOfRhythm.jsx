@@ -42,7 +42,6 @@ const Dots = () => {
       return pos.length() + Math.cos(pos.angleTo(right) * 8) * 0.5
     })
 
-    console.log(distances)
     return { vec, transform, positions, distances }
   },[])
 

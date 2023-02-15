@@ -1,7 +1,7 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation  } from "react-router-dom";
 
 const Container = styled.div`
   position: fixed;
@@ -44,7 +44,9 @@ const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState("light");
-  console.log('메인에서도 고침')
+  const [prevPath, setPrevPath] = useState(null);
+
+
   useLayoutEffect(() => {
     if (
       location.pathname === "/Drei-videoTexture" ||
@@ -59,6 +61,15 @@ const Header = () => {
       setTheme("light");
     }
   }, [location]);
+
+
+
+  useEffect(() => {
+    if (location.pathname !== prevPath) {
+      setPrevPath(location.pathname);
+      setIsOpen(false)
+    }
+  },[prevPath, location])
 
   return (
     <Container theme={theme}>
