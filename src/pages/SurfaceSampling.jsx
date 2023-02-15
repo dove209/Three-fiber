@@ -8,7 +8,7 @@ import {
   useLoader,
   useThree,
 } from "@react-three/fiber";
-import { OrbitControls, useTexture, Effects, Stars, Bounds } from "@react-three/drei";
+import { useTexture, Effects, Stars, Bounds } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { SSAOPass, UnrealBloomPass } from "three-stdlib";
 
