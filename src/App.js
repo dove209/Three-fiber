@@ -32,7 +32,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Suspense fallback={<div>...로딩중</div>}>
+      <Suspense fallback={<div className="loading">이동중...</div>}>
         <Routes>
           <Route path="/" element={<FlyingDoughnut />} />
           <Route path="/camera-pan" element={<CameraPan />} />

@@ -42,3 +42,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%);
+
+}
