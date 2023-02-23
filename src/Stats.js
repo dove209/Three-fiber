@@ -28,3 +28,6 @@ export function Stats({ showPanel = 0, className, parent }) {
 
 
 console.log('지니에서 수정2222')
+
+
+console.log('메인에서 수정.....1111')
