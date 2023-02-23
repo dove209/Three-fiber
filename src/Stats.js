@@ -27,4 +27,4 @@ export function Stats({ showPanel = 0, className, parent }) {
 }
 
 
-console.log('지니에서 수정')
+console.log('지니에서 수정2222')
