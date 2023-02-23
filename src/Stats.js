@@ -25,9 +25,3 @@ export function Stats({ showPanel = 0, className, parent }) {
   }, [parent])
   return null
 }
-
-
-console.log('지니에서 수정3333')
-
-
-console.log('메인에서 수정.....1111')
