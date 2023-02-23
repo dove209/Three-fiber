@@ -25,3 +25,6 @@ export function Stats({ showPanel = 0, className, parent }) {
   }, [parent])
   return null
 }
+
+
+console.log('지니에서 수정')
