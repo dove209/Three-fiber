@@ -34,7 +34,7 @@ const App = () => {
       <Header />
       <Suspense fallback={<div className="loading">이동중...</div>}>
         <Routes>
-          <Route path="/" element={<FlyingDoughnut />} />
+          <Route path="/flying-doughnut" element={<FlyingDoughnut />} />
           <Route path="/camera-pan" element={<CameraPan />} />
           <Route path="/ball-pit" element={<Ballpit />} />
           <Route path="/confetti" element={<Confetti />} />
