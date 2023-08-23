@@ -81,7 +81,7 @@ const Header = () => {
         <div className="menu-list">
           <ul>
             <li>
-              <Link to={"/"}>Flying Doughnut</Link>
+              <Link to={"/flying-doughnut"}>Flying Doughnut</Link>
             </li>
             <li>
               <Link to={"/camera-pan"}>Camera Pan</Link>
